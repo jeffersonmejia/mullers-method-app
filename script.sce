@@ -49,14 +49,15 @@ function BtnPush_callback(handles)
     ea= evstr(get(handles.numberTrend, "String"));
     //SE INICIALIZA EN +1 PARA Q ENTRE EN EL LOOP
     trend=ea+1;
+    er=0;
     //ÍNIDCE DE ITERACIÓN
-    i=0;
+    iterations=0;
     //INICIALIZACIÓN TABLA DE RESULTADOS
-    table_=zeros(0,6);
+    table_=zeros(0,7);
     //TEXTO CON RESULTADO FINAL
     resultFinal = "#Iteraciones = -- || Resultado ≈ --";
     //RANGO PARA PLOT
-    x = -20:0.1:20;
+    x = -10:0.1:10;
     //INICIA ITERACIÓN  
     while trend>ea
          //MULLER: F0,F1,F2
@@ -72,7 +73,9 @@ function BtnPush_callback(handles)
         a1=fx21-(x2+x1)*a2;
         a0=f2-x2*(fx21-x1*a2);
         //CALCULO RAIZ
-        raiz=(a1^2-4*a0*a2)^(1/2);    
+       discriminante = a1^2 - 4*a0*a2;
+         // CALCULA RAÍZ DEL DISCRIMINANTE
+        raiz = real(sqrt(discriminante)); 
         if (abs(-a1+raiz)>abs(-a1-raiz)) then
             x3=2*a0/(-a1+raiz);
         else
@@ -80,8 +83,11 @@ function BtnPush_callback(handles)
         end
         //ACTUALIZA TENDENCIA (EA)
         trend=abs(x2-x3);
+        er=abs(trend/x2)*100;
+        //#ITERACIÓN
+        iterations=iterations+1;  
         //RESULTADOS PARA MOSTRAR EN TABLA
-        row= [i x0 x1 x2 x3 trend]
+        row= [iterations x0 x1 x2 x3 trend er]
         //REDONDEA DATOS A 4 DECIMALES
         for j = 1:length(row)
           if abs(row(j) - round(row(j) * 10000) / 10000) > 1e-10 then
@@ -90,8 +96,7 @@ function BtnPush_callback(handles)
         end
         table_=[table_;row];
         //MUESTRA RESULTADOS ITERACIÓN EN LA TABLA
-        set(handles.tableResults,"String",["i" "x0" "x1" "x2" "x3" "ea(tendencia)";string(table_)]);
-        i=i+1;  
+        set(handles.tableResults,"String",["i" "x0" "x1" "x2" "x3" "ea(tendencia)" "er(%)";string(table_)]);
         x0=x1
         x1=x2
         x2=x3   
@@ -112,7 +117,7 @@ function BtnPush_callback(handles)
     xlabel("x"); ylabel("f(x)"); legend("f0", "f1", "f2", "f3"); 
      //RESULTADO FINAL
     x3= round(x3 * 10000) /10000;
-    resultFinal = "#Iteraciones = "+ string(i) + " || Resultado ≈ " + string(x3);
+    resultFinal = "#Iteraciones = "+ string(iterations) + " || Resultado ≈ " + string(x3);
     set(handles.txtIterations, "String", resultFinal);
 endfunction
 
