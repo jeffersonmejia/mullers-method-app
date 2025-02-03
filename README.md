@@ -13,7 +13,7 @@ A simple app created by scilab that gets the closest function to intersect the a
 
 # 3. Preview
 
-![project-pic](https://i.postimg.cc/Y9pGFjc1/wave-app-pic.png)
+Not available, coming soon...
 
 # 4. Author
 
