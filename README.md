@@ -13,7 +13,7 @@ A simple app created by scilab that gets the closest function to intersect the a
 
 # 3. Preview
 
-![Muller'rs method](https://i.postimg.cc/Y9pGFjc1/wave-app-pic.png)
+![project-pic](https://i.postimg.cc/Y9pGFjc1/wave-app-pic.png)
 
 # 4. Author
 
